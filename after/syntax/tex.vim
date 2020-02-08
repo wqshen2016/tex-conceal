@@ -1,8 +1,8 @@
 if has('conceal')
   " Misc
-  syn match texMathSymbol '\\phi'   contained conceal cchar=Φ
-  syn match texStatement '\\item\>' contained conceal cchar=•
-  syn match texMathSymbol '\\sqrt'  contained conceal cchar=√
+  syn match texMathSymbol '\\phi'      contained conceal cchar=Φ
+  syn match texMathSymbol '\\sqrt'     contained conceal cchar=√
+  syn match texStatement  '\\item\>'   contained conceal cchar=•
 
   " Some nice symbols.
   syn match texMathSymbol '\\square'   contained conceal cchar=◻️
@@ -14,10 +14,10 @@ if has('conceal')
   syn match texMathSymbol '\\quad'     contained conceal cchar= 
 
   " All kinds of delimiters.
-  syn match texStatement '``'          contained conceal cchar=“
-  syn match texStatement '\'\''        contained conceal cchar=”
-  syn match texDelimiter '\\{'         contained conceal cchar={
-  syn match texDelimiter '\\}'         contained conceal cchar=}
+  syn match texStatement  '``'         contained conceal cchar=“
+  syn match texStatement  '\'\''       contained conceal cchar=”
+  syn match texDelimiter  '\\{'        contained conceal cchar={
+  syn match texDelimiter  '\\}'        contained conceal cchar=}
   syn match texMathSymbol '\\langle'   contained conceal cchar=⟨
   syn match texMathSymbol '\\rangle'   contained conceal cchar=⟩
 
