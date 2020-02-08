@@ -2,7 +2,9 @@
 A vim plugin for extended concealment of symbols in tex files.
 
 ## Installation 
-``Plug 'Borroot/tex-conceal', {'for': 'tex'}``
+```
+Plug 'Borroot/tex-conceal', {'for': 'tex'}
+```
 
 ## Settings
 ```
