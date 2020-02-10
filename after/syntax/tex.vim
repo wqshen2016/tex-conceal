@@ -23,7 +23,6 @@ if has('conceal')
 
   " Logical and set theory symbols.
   syn match texMathSymbol '\\lnot'     contained conceal cchar=¬
-  syn match texMathSymbol '\\implies'  contained conceal cchar=⇒
   syn match texMathSymbol '\\geqslant' contained conceal cchar=⩾
   syn match texMathSymbol '\\leqslant' contained conceal cchar=⩽
 
