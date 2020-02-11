@@ -144,6 +144,6 @@ if has('conceal')
   " Text which is bold and italics.
   syn region texBoldItalStyle matchgroup=texTypeStyle start="\\emph\s*{" end="}" concealends contains=@texItalGroup
 
-  " TODO look into it
+  " If this is not set then the unicode charaters break monospacing when text is concealed.
   set ambiwidth=single
 endif
