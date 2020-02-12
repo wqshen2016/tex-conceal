@@ -3,6 +3,8 @@ if has('conceal')
   syn match texMathSymbol '\\phi'      contained conceal cchar=Φ
   syn match texMathSymbol '\\sqrt'     contained conceal cchar=√
   syn match texStatement  '\\item\>'   contained conceal cchar=•
+  syn match texStatement  '\\cdot'     contained conceal cchar=·
+  syn match texStatement  '\\equiv'    contained conceal cchar=≡
 
   " Some nice symbols.
   syn match texMathSymbol '\\square'   contained conceal cchar=◻️
@@ -134,15 +136,17 @@ if has('conceal')
     syn region texMathText matchgroup=texStatement start='\\\(\(inter\)\=text\|mbox\|mathrm\)\s*{' end='}' concealends keepend contains=@texFoldGroup containedin=texMathMatcher
   endif
 
+  " Recognise \begin{align} as a math environment to enable concealment there.
+  syn region texMathZoneA matchgroup=texStatement start="\\begin{align}"   matchgroup=texStatement end="\\end{align}"   keepend contains=@texMathZoneGroup
+  syn region texMathZoneA matchgroup=texStatement start="\\begin{align\*}" matchgroup=texStatement end="\\end{align\*}" keepend contains=@texMathZoneGroup
+
   " Add a syntax group for bold text in mathmode.
   syn cluster texMathZoneGroup add=texBoldMathText
   highlight texBoldMathText cterm=bold gui=bold
 
-  " Hide \mathbf and \bm and make it bold.
-  syn region texBoldMathText matchgroup=texStatement start='\\\(mathbf\|bm\){' end='}' concealends contains=@texMathZoneGroup containedin=texMathMatcher
-
-  " Text which is bold and italics.
-  syn region texBoldItalStyle matchgroup=texTypeStyle start="\\emph\s*{" end="}" concealends contains=@texItalGroup
+  " Hide \mathbf and \bm and make it bold. Text which is bold and italics.
+  syn region texBoldMathText  matchgroup=texStatement start='\\\(mathbf\|bm\){' end='}' concealends contains=@texMathZoneGroup containedin=texMathMatcher
+  syn region texBoldItalStyle matchgroup=texTypeStyle start="\\emph\s*{"        end="}" concealends contains=@texItalGroup
 
   " If this is not set then the unicode charaters break monospacing when text is concealed.
   set ambiwidth=single
