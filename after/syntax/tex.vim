@@ -57,10 +57,10 @@ if has('conceal')
   syn match texMathSymbol '_8' contained conceal cchar=₈
   syn match texMathSymbol '_9' contained conceal cchar=₉
 
-  syn match texMathSymbol '_i' contained conceal cchar=ᵢ
-  syn match texMathSymbol '^i' contained conceal cchar=ⁱ
-  syn match texMathSymbol '_o' contained conceal cchar=ₒ
-  syn match texMathSymbol '^o' contained conceal cchar=ᵒ
+  syn match texMathSymbol  '_i' contained conceal cchar=ᵢ
+  syn match texMathSymbol '\^i' contained conceal cchar=ⁱ
+  syn match texMathSymbol  '_o' contained conceal cchar=ₒ
+  syn match texMathSymbol '\^o' contained conceal cchar=ᵒ
 
   syn match texSuperscripts '1' contained conceal cchar=¹
   syn match texSuperscripts '-' contained conceal cchar=⁻
