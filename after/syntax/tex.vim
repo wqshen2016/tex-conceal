@@ -3,8 +3,8 @@ if has('conceal')
   syn match texMathSymbol '\\phi'      contained conceal cchar=Φ
   syn match texMathSymbol '\\sqrt'     contained conceal cchar=√
   syn match texStatement  '\\item\>'   contained conceal cchar=•
-  syn match texStatement  '\\cdot'     contained conceal cchar=·
-  syn match texStatement  '\\equiv'    contained conceal cchar=≡
+  syn match texMathSymbol '\\cdot'     contained conceal cchar=·
+  syn match texMathSymbol '\\equiv'    contained conceal cchar=≡
 
   " Some nice symbols.
   syn match texMathSymbol '\\square'   contained conceal cchar=◻️
@@ -34,21 +34,6 @@ if has('conceal')
   syn match texMathSymbol '\\where'    contained conceal cchar=|
   syn match texMathSymbol '\\emptyset' contained conceal cchar=Ø
 
-  " Super scripts with numbers.
-  syn match texSuperScripts '0' contained conceal cchar=⁰
-  syn match texSuperScripts '1' contained conceal cchar=¹
-  syn match texSuperScripts '2' contained conceal cchar=²
-  syn match texSuperScripts '3' contained conceal cchar=³
-  syn match texSuperScripts '4' contained conceal cchar=⁴
-  syn match texSuperScripts '5' contained conceal cchar=⁵
-  syn match texSuperScripts '6' contained conceal cchar=⁶
-  syn match texSuperScripts '7' contained conceal cchar=⁷
-  syn match texSuperScripts '8' contained conceal cchar=⁸
-  syn match texSuperScripts '9' contained conceal cchar=⁹
-
-  syn match texMathSymbol '\^[0-9]'    contained conceal contains=texSuperScripts
-  syn match texMathSymbol '\^{[0-9]*}' contained conceal contains=texSuperScripts
-
   " Sub scripts with numbers.
   syn match texSubScripts '0' contained conceal cchar=₀
   syn match texSubScripts '1' contained conceal cchar=₁
@@ -64,7 +49,22 @@ if has('conceal')
   syn match texMathSymbol '_[0-9]'    contained conceal contains=texSubScripts
   syn match texMathSymbol '_{[0-9]*}' contained conceal contains=texSubScripts
 
-  " Special super/sub scripts with letters.
+  " Super scripts with numbers.
+  syn match texSuperScripts '0' contained conceal cchar=⁰
+  syn match texSuperScripts '1' contained conceal cchar=¹
+  syn match texSuperScripts '2' contained conceal cchar=²
+  syn match texSuperScripts '3' contained conceal cchar=³
+  syn match texSuperScripts '4' contained conceal cchar=⁴
+  syn match texSuperScripts '5' contained conceal cchar=⁵
+  syn match texSuperScripts '6' contained conceal cchar=⁶
+  syn match texSuperScripts '7' contained conceal cchar=⁷
+  syn match texSuperScripts '8' contained conceal cchar=⁸
+  syn match texSuperScripts '9' contained conceal cchar=⁹
+
+  syn match texMathSymbol '\^[0-9]'    contained conceal contains=texSuperScripts
+  syn match texMathSymbol '\^{[0-9]*}' contained conceal contains=texSuperScripts
+
+  " Special sub/super scripts with letters.
   syn match texMathSymbol  '_o' contained conceal cchar=ₒ
   syn match texMathSymbol '\^o' contained conceal cchar=ᵒ
   syn match texMathSymbol  '_i' contained conceal cchar=ᵢ
@@ -136,12 +136,14 @@ if has('conceal')
   syn match texMathSymbol '\\mathscr{Y}' contained conceal cchar=𝓨
   syn match texMathSymbol '\\mathscr{Z}' contained conceal cchar=𝓩
 
-  " Hide \text delimiter etc inside math mode TODO look into it
+  " Do spell checking inside of the correct tex statements.
   if !exists("g:tex_nospell") || !g:tex_nospell
-    syn region texMathText matchgroup=texStatement start='\\\(\(inter\)\=mathrm\)\s*{'     end='}' concealends keepend contains=@texFoldGroup containedin=texMathMatcher
+    syn region texMathText matchgroup=texStatement start='\\mathrm\s*{'                    end='}' concealends keepend contains=@texFoldGroup        containedin=texMathMatcher
     syn region texMathText matchgroup=texStatement start='\\\(\(inter\)\=text\|mbox\)\s*{' end='}' concealends keepend contains=@texFoldGroup,@Spell containedin=texMathMatcher
+
+  " Do not do any spell checking when it is turned of.
   else
-    syn region texMathText matchgroup=texStatement start='\\\(\(inter\)\=text\|mbox\|mathrm\)\s*{' end='}' concealends keepend contains=@texFoldGroup containedin=texMathMatcher
+    syn region texMathText matchgroup=texStatement start='\\\(\(inter\)\?text\|mbox\|mathrm\)\s*{' end='}' concealends keepend contains=@texFoldGroup containedin=texMathMatcher
   endif
 
   " Recognise \begin{align} as a math environment to enable concealment there.
