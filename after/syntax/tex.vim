@@ -34,43 +34,51 @@ if has('conceal')
   syn match texMathSymbol '\\where'    contained conceal cchar=|
   syn match texMathSymbol '\\emptyset' contained conceal cchar=Ø
 
-  " Simple number super/sub-scripts.
-  syn match texMathSymbol '\^0' contained conceal cchar=⁰
-  syn match texMathSymbol '\^1' contained conceal cchar=¹
-  syn match texMathSymbol '\^2' contained conceal cchar=²
-  syn match texMathSymbol '\^3' contained conceal cchar=³
-  syn match texMathSymbol '\^4' contained conceal cchar=⁴
-  syn match texMathSymbol '\^5' contained conceal cchar=⁵
-  syn match texMathSymbol '\^6' contained conceal cchar=⁶
-  syn match texMathSymbol '\^7' contained conceal cchar=⁷
-  syn match texMathSymbol '\^8' contained conceal cchar=⁸
-  syn match texMathSymbol '\^9' contained conceal cchar=⁹
+  " Super scripts with numbers.
+  syn match texSuperScripts '0' contained conceal cchar=⁰
+  syn match texSuperScripts '1' contained conceal cchar=¹
+  syn match texSuperScripts '2' contained conceal cchar=²
+  syn match texSuperScripts '3' contained conceal cchar=³
+  syn match texSuperScripts '4' contained conceal cchar=⁴
+  syn match texSuperScripts '5' contained conceal cchar=⁵
+  syn match texSuperScripts '6' contained conceal cchar=⁶
+  syn match texSuperScripts '7' contained conceal cchar=⁷
+  syn match texSuperScripts '8' contained conceal cchar=⁸
+  syn match texSuperScripts '9' contained conceal cchar=⁹
 
-  syn match texMathSymbol '_0' contained conceal cchar=₀
-  syn match texMathSymbol '_1' contained conceal cchar=₁
-  syn match texMathSymbol '_2' contained conceal cchar=₂
-  syn match texMathSymbol '_3' contained conceal cchar=₃
-  syn match texMathSymbol '_4' contained conceal cchar=₄
-  syn match texMathSymbol '_5' contained conceal cchar=₅
-  syn match texMathSymbol '_6' contained conceal cchar=₆
-  syn match texMathSymbol '_7' contained conceal cchar=₇
-  syn match texMathSymbol '_8' contained conceal cchar=₈
-  syn match texMathSymbol '_9' contained conceal cchar=₉
+  syn match texMathSymbol '\^[0-9]'    contained conceal contains=texSuperScripts
+  syn match texMathSymbol '\^{[0-9]*}' contained conceal contains=texSuperScripts
 
-  syn match texMathSymbol  '_i' contained conceal cchar=ᵢ
-  syn match texMathSymbol '\^i' contained conceal cchar=ⁱ
+  " Sub scripts with numbers.
+  syn match texSubScripts '0' contained conceal cchar=₀
+  syn match texSubScripts '1' contained conceal cchar=₁
+  syn match texSubScripts '2' contained conceal cchar=₂
+  syn match texSubScripts '3' contained conceal cchar=₃
+  syn match texSubScripts '4' contained conceal cchar=₄
+  syn match texSubScripts '5' contained conceal cchar=₅
+  syn match texSubScripts '6' contained conceal cchar=₆
+  syn match texSubScripts '7' contained conceal cchar=₇
+  syn match texSubScripts '8' contained conceal cchar=₈
+  syn match texSubScripts '9' contained conceal cchar=₉
+
+  syn match texMathSymbol '_[0-9]'    contained conceal contains=texSubScripts
+  syn match texMathSymbol '_{[0-9]*}' contained conceal contains=texSubScripts
+
+  " Special super/sub scripts with letters.
   syn match texMathSymbol  '_o' contained conceal cchar=ₒ
   syn match texMathSymbol '\^o' contained conceal cchar=ᵒ
+  syn match texMathSymbol  '_i' contained conceal cchar=ᵢ
+  syn match texMathSymbol '\^i' contained conceal cchar=ⁱ
+  syn match texMathSymbol  '_n' contained conceal cchar=ₙ
+  syn match texMathSymbol '\^n' contained conceal cchar=ⁿ
 
-  syn match texSuperscripts '1' contained conceal cchar=¹
-  syn match texSuperscripts '-' contained conceal cchar=⁻
-  syn match texSuperscripts 'T' contained conceal cchar=ᵀ
+  syn match texSuperScriptsSpecial '-' contained conceal cchar=⁻
+  syn match texSuperScriptsSpecial 'T' contained conceal cchar=ᵀ
 
-  syn match texMathSymbol '\^{-1}'         contained conceal contains=texSuperscripts
-  syn match texMathSymbol '\^T'            contained conceal contains=texSuperscripts
-  syn match texMathSymbol '\^{-T}'         contained conceal contains=texSuperscripts
-  syn match texMathSymbol '\^\\mathrm{T}'  contained conceal contains=texSuperscripts
-  syn match texMathSymbol '\^\\mathrm{-T}' contained conceal contains=texSuperscripts
+  syn match texMathSymbol '\^T'            contained conceal contains=texSuperscriptsSpecial
+  syn match texMathSymbol '\^{-T}'         contained conceal contains=texSuperscriptsSpecial
+  syn match texMathSymbol '\^\\mathrm{T}'  contained conceal contains=texSuperscriptsSpecial
+  syn match texMathSymbol '\^\\mathrm{-T}' contained conceal contains=texSuperscriptsSpecial
 
   " All \mathbb characters.
   syn match texMathSymbol '\\mathbb{A}' contained conceal cchar=𝔸
