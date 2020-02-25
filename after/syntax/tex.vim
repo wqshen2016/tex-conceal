@@ -75,10 +75,39 @@ if has('conceal')
   syn match texSuperScriptsSpecial '-' contained conceal cchar=⁻
   syn match texSuperScriptsSpecial 'T' contained conceal cchar=ᵀ
 
-  syn match texMathSymbol '\^T'            contained conceal contains=texSuperscriptsSpecial
-  syn match texMathSymbol '\^{-T}'         contained conceal contains=texSuperscriptsSpecial
-  syn match texMathSymbol '\^\\mathrm{T}'  contained conceal contains=texSuperscriptsSpecial
-  syn match texMathSymbol '\^\\mathrm{-T}' contained conceal contains=texSuperscriptsSpecial
+  syn match texMathSymbol '\^T'              contained conceal contains=texSuperscriptsSpecial
+  syn match texMathSymbol '\^{-T}'           contained conceal contains=texSuperscriptsSpecial
+  syn match texMathSymbol '\^\\mathrm{-\?T}' contained conceal contains=texSuperscriptsSpecial
+
+  " All \mathcal characters mapped to the normal ones for readability.
+  syn match texMathSymbolCal 'A' contained conceal cchar=A
+  syn match texMathSymbolCal 'B' contained conceal cchar=B
+  syn match texMathSymbolCal 'C' contained conceal cchar=C
+  syn match texMathSymbolCal 'D' contained conceal cchar=D
+  syn match texMathSymbolCal 'E' contained conceal cchar=E
+  syn match texMathSymbolCal 'F' contained conceal cchar=F
+  syn match texMathSymbolCal 'G' contained conceal cchar=G
+  syn match texMathSymbolCal 'H' contained conceal cchar=H
+  syn match texMathSymbolCal 'I' contained conceal cchar=I
+  syn match texMathSymbolCal 'J' contained conceal cchar=J
+  syn match texMathSymbolCal 'K' contained conceal cchar=K
+  syn match texMathSymbolCal 'L' contained conceal cchar=L
+  syn match texMathSymbolCal 'M' contained conceal cchar=M
+  syn match texMathSymbolCal 'N' contained conceal cchar=N
+  syn match texMathSymbolCal 'O' contained conceal cchar=O
+  syn match texMathSymbolCal 'P' contained conceal cchar=P
+  syn match texMathSymbolCal 'Q' contained conceal cchar=Q
+  syn match texMathSymbolCal 'R' contained conceal cchar=R
+  syn match texMathSymbolCal 'S' contained conceal cchar=S
+  syn match texMathSymbolCal 'T' contained conceal cchar=T
+  syn match texMathSymbolCal 'U' contained conceal cchar=U
+  syn match texMathSymbolCal 'V' contained conceal cchar=V
+  syn match texMathSymbolCal 'W' contained conceal cchar=W
+  syn match texMathSymbolCal 'X' contained conceal cchar=X
+  syn match texMathSymbolCal 'Y' contained conceal cchar=Y
+  syn match texMathSymbolCal 'Z' contained conceal cchar=Z
+
+  syn match texMathSymbol '\\mathcal{[A-Z]*}' contained conceal contains=texMathSymbolCal
 
   " All \mathbb characters.
   syn match texMathSymbol '\\mathbb{A}' contained conceal cchar=𝔸
@@ -108,7 +137,7 @@ if has('conceal')
   syn match texMathSymbol '\\mathbb{Y}' contained conceal cchar=𝕐
   syn match texMathSymbol '\\mathbb{Z}' contained conceal cchar=ℤ
 
-  " All \mathcal characters.
+  " All \mathscr characters.
   syn match texMathSymbol '\\mathscr{A}' contained conceal cchar=𝓐
   syn match texMathSymbol '\\mathscr{B}' contained conceal cchar=𝓑
   syn match texMathSymbol '\\mathscr{C}' contained conceal cchar=𝓒
