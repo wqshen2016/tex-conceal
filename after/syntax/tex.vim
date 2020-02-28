@@ -33,7 +33,9 @@ if has('conceal') && &enc == 'utf-8'
 		\ ['models'     , '⊨'],
 		\ ['setminus'   , '\'],
 		\ ['where'      , '|'],
-		\ ['emptyset'   , 'Ø']]
+		\ ['emptyset'   , 'Ø'],
+		\ ['iff'        , '↔'],
+		\ ['Leftrightarrow', '↔']]
 
 	for texMath in s:texMathList
 		exe "syn match texMathSymbol '\\\\".texMath[0]."' contained conceal cchar=".texMath[1]
