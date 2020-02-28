@@ -17,6 +17,7 @@ if has('conceal') && &enc == 'utf-8'
 		\ ['phi'        , 'Φ'],
 		\ ['sqrt'       , '√'],
 		\ ['cdot'       , '·'],
+		\ ['approx'     , '≈'],
 		\ ['equiv'      , '≡'],
 		\ ['square'     , '◻️'],
 		\ ['lozenge'    , '◊'],
