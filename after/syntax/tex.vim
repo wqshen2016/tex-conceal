@@ -14,26 +14,27 @@ if has('conceal') && &enc == 'utf-8'
 
 	" Extra math symbols or redefinitions.
 	let s:texMathList = [
-		\ ['oplus'    , '+'],
-		\ ['phi'      , 'Φ'],
-		\ ['sqrt'     , '√'],
-		\ ['cdot'     , '·'],
-		\ ['equiv'    , '≡'],
-		\ ['square'   , '◻️'],
-		\ ['lozenge'  , '◊'],
-		\ [','        , ' '],
-		\ [' '        , ' '],
-		\ ['quad'     , ' '],
-		\ ['langle'   , '⟨'],
-		\ ['rangle'   , '⟩'],
-		\ ['lnot'     , '¬'],
-		\ ['geqslant' , '⩾'],
-		\ ['leqslant' , '⩽'],
-		\ ['vDash'    , '⊨'],
-		\ ['models'   , '⊨'],
-		\ ['setminus' , '\'],
-		\ ['where'    , '|'],
-		\ ['emptyset' , 'Ø']]
+		\ ['oplus'      , '⨭'],
+		\ ['mathcal{O}' , '𐐃'],
+		\ ['phi'        , 'Φ'],
+		\ ['sqrt'       , '√'],
+		\ ['cdot'       , '·'],
+		\ ['equiv'      , '≡'],
+		\ ['square'     , '◻️'],
+		\ ['lozenge'    , '◊'],
+		\ [','          , ' '],
+		\ [' '          , ' '],
+		\ ['quad'       , ' '],
+		\ ['langle'     , '⟨'],
+		\ ['rangle'     , '⟩'],
+		\ ['lnot'       , '¬'],
+		\ ['geqslant'   , '⩾'],
+		\ ['leqslant'   , '⩽'],
+		\ ['vDash'      , '⊨'],
+		\ ['models'     , '⊨'],
+		\ ['setminus'   , '\'],
+		\ ['where'      , '|'],
+		\ ['emptyset'   , 'Ø']]
 
 	for texMath in s:texMathList
 		exe "syn match texMathSymbol '\\\\".texMath[0]."' contained conceal cchar=".texMath[1]
@@ -86,7 +87,7 @@ if has('conceal') && &enc == 'utf-8'
 	" Here we will make sure that the subscripts will only be concealed if ALL of the
 	" numbers/letters/symbols have a subscript equivalent, otherwise it is not concealed.
 	" NOTE: This is super ugly, so please inform me if you know a better way.
-	syn match texMathSymbol '_\(\(0\|1\|2\|3\|4\|5\|6\|7\|8\|9\|a\|e\|h\|i\|j\|k\|l\|m\|n\|o\|p\|r\|s\|t\|u\|v\|x\|+\|-\|=\|(\|)\|\\phi\|\\chi\|\\beta\|\\gamma\|\\rho\)\|{\(0\|1\|2\|3\|4\|5\|6\|7\|8\|9\|a\|e\|h\|i\|j\|k\|l\|m\|n\|o\|p\|r\|s\|t\|u\|v\|x\|+\|-\|=\|(\|)\|\\phi\|\\chi\|\\beta\|\\gamma\|\\rho\| \)\+}\)' contained conceal contains=texSubScriptBetter
+	syn match texMathSymbol '_\(\([0-9]\|a\|e\|h\|i\|j\|k\|l\|m\|n\|o\|p\|r\|s\|t\|u\|v\|x\|+\|-\|=\|(\|)\|\\phi\|\\chi\|\\beta\|\\gamma\|\\rho\)\|{\([0-9]\|a\|e\|h\|i\|j\|k\|l\|m\|n\|o\|p\|r\|s\|t\|u\|v\|x\|+\|-\|=\|(\|)\|\\phi\|\\chi\|\\beta\|\\gamma\|\\rho\| \)\+}\)' contained conceal contains=texSubScriptBetter
 
 	" Super scripts with numbers.
 	syn match texSuperScripts '0' contained conceal cchar=⁰
@@ -114,91 +115,35 @@ if has('conceal') && &enc == 'utf-8'
 	syn match texMathSymbol '\^{-T}'           contained conceal contains=texSuperscriptsSpecial
 	syn match texMathSymbol '\^\\mathrm{-\?T}' contained conceal contains=texSuperscriptsSpecial
 
-	" All \mathcal characters mapped to the normal ones for readability.
-	syn match texMathSymbolCal 'A' contained conceal cchar=A
-	syn match texMathSymbolCal 'B' contained conceal cchar=B
-	syn match texMathSymbolCal 'C' contained conceal cchar=C
-	syn match texMathSymbolCal 'D' contained conceal cchar=D
-	syn match texMathSymbolCal 'E' contained conceal cchar=E
-	syn match texMathSymbolCal 'F' contained conceal cchar=F
-	syn match texMathSymbolCal 'G' contained conceal cchar=G
-	syn match texMathSymbolCal 'H' contained conceal cchar=H
-	syn match texMathSymbolCal 'I' contained conceal cchar=I
-	syn match texMathSymbolCal 'J' contained conceal cchar=J
-	syn match texMathSymbolCal 'K' contained conceal cchar=K
-	syn match texMathSymbolCal 'L' contained conceal cchar=L
-	syn match texMathSymbolCal 'M' contained conceal cchar=M
-	syn match texMathSymbolCal 'N' contained conceal cchar=N
-	syn match texMathSymbolCal 'O' contained conceal cchar=O
-	syn match texMathSymbolCal 'P' contained conceal cchar=P
-	syn match texMathSymbolCal 'Q' contained conceal cchar=Q
-	syn match texMathSymbolCal 'R' contained conceal cchar=R
-	syn match texMathSymbolCal 'S' contained conceal cchar=S
-	syn match texMathSymbolCal 'T' contained conceal cchar=T
-	syn match texMathSymbolCal 'U' contained conceal cchar=U
-	syn match texMathSymbolCal 'V' contained conceal cchar=V
-	syn match texMathSymbolCal 'W' contained conceal cchar=W
-	syn match texMathSymbolCal 'X' contained conceal cchar=X
-	syn match texMathSymbolCal 'Y' contained conceal cchar=Y
-	syn match texMathSymbolCal 'Z' contained conceal cchar=Z
-
-	syn match texMathSymbol '\\mathcal{[A-Z]*}' contained conceal contains=texMathSymbolCal
-
 	" All \mathbb characters.
-	syn match texMathSymbol '\\mathbb{A}' contained conceal cchar=𝔸
-	syn match texMathSymbol '\\mathbb{B}' contained conceal cchar=𝔹
-	syn match texMathSymbol '\\mathbb{C}' contained conceal cchar=ℂ
-	syn match texMathSymbol '\\mathbb{D}' contained conceal cchar=𝔻
-	syn match texMathSymbol '\\mathbb{E}' contained conceal cchar=𝔼
-	syn match texMathSymbol '\\mathbb{F}' contained conceal cchar=𝔽
-	syn match texMathSymbol '\\mathbb{G}' contained conceal cchar=𝔾
-	syn match texMathSymbol '\\mathbb{H}' contained conceal cchar=ℍ
-	syn match texMathSymbol '\\mathbb{I}' contained conceal cchar=𝕀
-	syn match texMathSymbol '\\mathbb{J}' contained conceal cchar=𝕁
-	syn match texMathSymbol '\\mathbb{K}' contained conceal cchar=𝕂
-	syn match texMathSymbol '\\mathbb{L}' contained conceal cchar=𝕃
-	syn match texMathSymbol '\\mathbb{M}' contained conceal cchar=𝕄
-	syn match texMathSymbol '\\mathbb{N}' contained conceal cchar=ℕ
-	syn match texMathSymbol '\\mathbb{O}' contained conceal cchar=𝕆
-	syn match texMathSymbol '\\mathbb{P}' contained conceal cchar=ℙ
-	syn match texMathSymbol '\\mathbb{Q}' contained conceal cchar=ℚ
-	syn match texMathSymbol '\\mathbb{R}' contained conceal cchar=ℝ
-	syn match texMathSymbol '\\mathbb{S}' contained conceal cchar=𝕊
-	syn match texMathSymbol '\\mathbb{T}' contained conceal cchar=𝕋
-	syn match texMathSymbol '\\mathbb{U}' contained conceal cchar=𝕌
-	syn match texMathSymbol '\\mathbb{V}' contained conceal cchar=𝕍
-	syn match texMathSymbol '\\mathbb{W}' contained conceal cchar=𝕎
-	syn match texMathSymbol '\\mathbb{X}' contained conceal cchar=𝕏
-	syn match texMathSymbol '\\mathbb{Y}' contained conceal cchar=𝕐
-	syn match texMathSymbol '\\mathbb{Z}' contained conceal cchar=ℤ
-
-	" All \mathscr characters.
-	syn match texMathSymbol '\\mathscr{A}' contained conceal cchar=𝓐
-	syn match texMathSymbol '\\mathscr{B}' contained conceal cchar=𝓑
-	syn match texMathSymbol '\\mathscr{C}' contained conceal cchar=𝓒
-	syn match texMathSymbol '\\mathscr{D}' contained conceal cchar=𝓓
-	syn match texMathSymbol '\\mathscr{E}' contained conceal cchar=𝓔
-	syn match texMathSymbol '\\mathscr{F}' contained conceal cchar=𝓕
-	syn match texMathSymbol '\\mathscr{G}' contained conceal cchar=𝓖
-	syn match texMathSymbol '\\mathscr{H}' contained conceal cchar=𝓗
-	syn match texMathSymbol '\\mathscr{I}' contained conceal cchar=𝓘
-	syn match texMathSymbol '\\mathscr{J}' contained conceal cchar=𝓙
-	syn match texMathSymbol '\\mathscr{K}' contained conceal cchar=𝓚
-	syn match texMathSymbol '\\mathscr{L}' contained conceal cchar=𝓛
-	syn match texMathSymbol '\\mathscr{M}' contained conceal cchar=𝓜
-	syn match texMathSymbol '\\mathscr{N}' contained conceal cchar=𝓝
-	syn match texMathSymbol '\\mathscr{O}' contained conceal cchar=𝓞
-	syn match texMathSymbol '\\mathscr{P}' contained conceal cchar=𝓟
-	syn match texMathSymbol '\\mathscr{Q}' contained conceal cchar=𝓠
-	syn match texMathSymbol '\\mathscr{R}' contained conceal cchar=𝓡
-	syn match texMathSymbol '\\mathscr{S}' contained conceal cchar=𝓢
-	syn match texMathSymbol '\\mathscr{T}' contained conceal cchar=𝓣
-	syn match texMathSymbol '\\mathscr{U}' contained conceal cchar=𝓤
-	syn match texMathSymbol '\\mathscr{V}' contained conceal cchar=𝓥
-	syn match texMathSymbol '\\mathscr{W}' contained conceal cchar=𝓦
-	syn match texMathSymbol '\\mathscr{X}' contained conceal cchar=𝓧
-	syn match texMathSymbol '\\mathscr{Y}' contained conceal cchar=𝓨
-	syn match texMathSymbol '\\mathscr{Z}' contained conceal cchar=𝓩
+	syn match texMathSymbolBb ' ' contained conceal cchar= 
+	syn match texMathSymbolBb 'A' contained conceal cchar=𝔸
+	syn match texMathSymbolBb 'B' contained conceal cchar=𝔹
+	syn match texMathSymbolBb 'C' contained conceal cchar=ℂ
+	syn match texMathSymbolBb 'D' contained conceal cchar=𝔻
+	syn match texMathSymbolBb 'E' contained conceal cchar=𝔼
+	syn match texMathSymbolBb 'F' contained conceal cchar=𝔽
+	syn match texMathSymbolBb 'G' contained conceal cchar=𝔾
+	syn match texMathSymbolBb 'H' contained conceal cchar=ℍ
+	syn match texMathSymbolBb 'I' contained conceal cchar=𝕀
+	syn match texMathSymbolBb 'J' contained conceal cchar=𝕁
+	syn match texMathSymbolBb 'K' contained conceal cchar=𝕂
+	syn match texMathSymbolBb 'L' contained conceal cchar=𝕃
+	syn match texMathSymbolBb 'M' contained conceal cchar=𝕄
+	syn match texMathSymbolBb 'N' contained conceal cchar=ℕ
+	syn match texMathSymbolBb 'O' contained conceal cchar=𝕆
+	syn match texMathSymbolBb 'P' contained conceal cchar=ℙ
+	syn match texMathSymbolBb 'Q' contained conceal cchar=ℚ
+	syn match texMathSymbolBb 'R' contained conceal cchar=ℝ
+	syn match texMathSymbolBb 'S' contained conceal cchar=𝕊
+	syn match texMathSymbolBb 'T' contained conceal cchar=𝕋
+	syn match texMathSymbolBb 'U' contained conceal cchar=𝕌
+	syn match texMathSymbolBb 'V' contained conceal cchar=𝕍
+	syn match texMathSymbolBb 'W' contained conceal cchar=𝕎
+	syn match texMathSymbolBb 'X' contained conceal cchar=𝕏
+	syn match texMathSymbolBb 'Y' contained conceal cchar=𝕐
+	syn match texMathSymbolBb 'Z' contained conceal cchar=ℤ
+	syn match texMathSymbol '\\mathbb{\(\s\|[A-Z]\)\+}' contained conceal contains=texMathSymbolBb
 
 	" Do spell checking inside of the correct tex statements.
 	if !exists("g:tex_nospell") || !g:tex_nospell
