@@ -40,8 +40,9 @@ if has('conceal') && &enc == 'utf-8'
 		exe "syn match texMathSymbol '\\\\".texMath[0]."' contained conceal cchar=".texMath[1]
 	endfor
 
-	" Sub scripts with numbers, letters and symbols mixed.
+	" Sub scripts with numbers, letters and symbols mixed but smartly.
 	let s:texSubScriptList = [
+		\ [' '       , ' '],
 		\ ['0'       , '₀'],
 		\ ['1'       , '₁'],
 		\ ['2'       , '₂'],
@@ -89,63 +90,115 @@ if has('conceal') && &enc == 'utf-8'
 	" NOTE: This is super ugly, so please inform me if you know a better way.
 	syn match texMathSymbol '_\(\([0-9]\|a\|e\|h\|i\|j\|k\|l\|m\|n\|o\|p\|r\|s\|t\|u\|v\|x\|+\|-\|=\|(\|)\|\\phi\|\\chi\|\\beta\|\\gamma\|\\rho\)\|{\([0-9]\|a\|e\|h\|i\|j\|k\|l\|m\|n\|o\|p\|r\|s\|t\|u\|v\|x\|+\|-\|=\|(\|)\|\\phi\|\\chi\|\\beta\|\\gamma\|\\rho\| \)\+}\)' contained conceal contains=texSubScriptBetter
 
-	" Super scripts with numbers.
-	syn match texSuperScripts '0' contained conceal cchar=⁰
-	syn match texSuperScripts '1' contained conceal cchar=¹
-	syn match texSuperScripts '2' contained conceal cchar=²
-	syn match texSuperScripts '3' contained conceal cchar=³
-	syn match texSuperScripts '4' contained conceal cchar=⁴
-	syn match texSuperScripts '5' contained conceal cchar=⁵
-	syn match texSuperScripts '6' contained conceal cchar=⁶
-	syn match texSuperScripts '7' contained conceal cchar=⁷
-	syn match texSuperScripts '8' contained conceal cchar=⁸
-	syn match texSuperScripts '9' contained conceal cchar=⁹
+	" Super scripts with numbers, letters and symbols mixed but smartly.
+	let s:texSuperScriptList = [
+		\ [' ', ' '],
+		\ ['0', '⁰'],
+		\ ['1', '¹'],
+		\ ['2', '²'],
+		\ ['3', '³'],
+		\ ['4', '⁴'],
+		\ ['5', '⁵'],
+		\ ['6', '⁶'],
+		\ ['7', '⁷'],
+		\ ['8', '⁸'],
+		\ ['9', '⁹'],
+		\ ['a', 'ᵃ'],
+		\ ['b', 'ᵇ'],
+		\ ['c', 'ᶜ'],
+		\ ['d', 'ᵈ'],
+		\ ['e', 'ᵉ'],
+		\ ['f', 'ᶠ'],
+		\ ['g', 'ᵍ'],
+		\ ['h', 'ʰ'],
+		\ ['i', 'ⁱ'],
+		\ ['j', 'ʲ'],
+		\ ['k', 'ᵏ'],
+		\ ['l', 'ˡ'],
+		\ ['m', 'ᵐ'],
+		\ ['n', 'ⁿ'],
+		\ ['o', 'ᵒ'],
+		\ ['p', 'ᵖ'],
+		\ ['r', 'ʳ'],
+		\ ['s', 'ˢ'],
+		\ ['t', 'ᵗ'],
+		\ ['u', 'ᵘ'],
+		\ ['v', 'ᵛ'],
+		\ ['w', 'ʷ'],
+		\ ['x', 'ˣ'],
+		\ ['y', 'ʸ'],
+		\ ['z', 'ᶻ'],
+		\ ['A', 'ᴬ'],
+		\ ['B', 'ᴮ'],
+		\ ['D', 'ᴰ'],
+		\ ['E', 'ᴱ'],
+		\ ['G', 'ᴳ'],
+		\ ['H', 'ᴴ'],
+		\ ['I', 'ᴵ'],
+		\ ['J', 'ᴶ'],
+		\ ['K', 'ᴷ'],
+		\ ['L', 'ᴸ'],
+		\ ['M', 'ᴹ'],
+		\ ['N', 'ᴺ'],
+		\ ['O', 'ᴼ'],
+		\ ['P', 'ᴾ'],
+		\ ['R', 'ᴿ'],
+		\ ['T', 'ᵀ'],
+		\ ['U', 'ᵁ'],
+		\ ['W', 'ᵂ'],
+		\ ['+', '⁺'],
+		\ ['-', '⁻'],
+		\ ['<', '˂'],
+		\ ['>', '˃'],
+		\ ['/', 'ˊ'],
+		\ ['(', '⁽'],
+		\ [')', '⁾'],
+		\ ['=', '⁼'],
+		\ ['\.','˙']]
 
-	syn match texMathSymbol '\^\([0-9]\|{[0-9]\+}\)' contained conceal contains=texSuperScripts
+	for texSuperScript in s:texSuperScriptList
+		exe "syn match texSuperScriptBetter '".texSuperScript[0]."' contained conceal cchar=".texSuperScript[1]
+	endfor
 
-	" Special super scripts with letters and symbols.
-	syn match texMathSymbol '\^o' contained conceal cchar=ᵒ
-	syn match texMathSymbol '\^i' contained conceal cchar=ⁱ
-	syn match texMathSymbol '\^n' contained conceal cchar=ⁿ
-
-	syn match texSuperScriptsSpecial '-' contained conceal cchar=⁻
-	syn match texSuperScriptsSpecial 'T' contained conceal cchar=ᵀ
-
-	syn match texMathSymbol '\^T'              contained conceal contains=texSuperscriptsSpecial
-	syn match texMathSymbol '\^{-T}'           contained conceal contains=texSuperscriptsSpecial
-	syn match texMathSymbol '\^\\mathrm{-\?T}' contained conceal contains=texSuperscriptsSpecial
+	" Here we will make sure that the superscripts will only be concealed if ALL of the
+	" numbers/letters/symbols have a superscript equivalent, otherwise it is not concealed.
+	" Furthermore if there are multiple characters they either all have to be numbers or no
+	" numbers at all since the superscript numbers have a different height than the rest.
+	" NOTE: This is super ugly, so please inform me if you know a better way.
+	syn match texMathSymbol '\^\(\([0-9]\|a\|b\|c\|d\|e\|f\|g\|h\|i\|j\|k\|l\|m\|n\|o\|p\|r\|s\|t\|u\|v\|w\|x\|y\|z\|A\|B\|D\|E\|G\|H\|I\|J\|K\|L\|M\|N\|O\|P\|R\|T\|U\|W\|+\|-\|<\|>\|/\|(\|)\|=\|\.\)\|{\(a\|b\|c\|d\|e\|f\|g\|h\|i\|j\|k\|l\|m\|n\|o\|p\|r\|s\|t\|u\|v\|w\|x\|y\|z\|A\|B\|D\|E\|G\|H\|I\|J\|K\|L\|M\|N\|O\|P\|R\|T\|U\|W\|+\|-\|<\|>\|/\|(\|)\|=\|\.\| \)\+}\|{[0-9]\+}\)' contained conceal contains=texSuperScriptBetter
 
 	" All \mathbb characters.
-	syn match texMathSymbolBb ' ' contained conceal cchar= 
-	syn match texMathSymbolBb 'A' contained conceal cchar=𝔸
-	syn match texMathSymbolBb 'B' contained conceal cchar=𝔹
-	syn match texMathSymbolBb 'C' contained conceal cchar=ℂ
-	syn match texMathSymbolBb 'D' contained conceal cchar=𝔻
-	syn match texMathSymbolBb 'E' contained conceal cchar=𝔼
-	syn match texMathSymbolBb 'F' contained conceal cchar=𝔽
-	syn match texMathSymbolBb 'G' contained conceal cchar=𝔾
-	syn match texMathSymbolBb 'H' contained conceal cchar=ℍ
-	syn match texMathSymbolBb 'I' contained conceal cchar=𝕀
-	syn match texMathSymbolBb 'J' contained conceal cchar=𝕁
-	syn match texMathSymbolBb 'K' contained conceal cchar=𝕂
-	syn match texMathSymbolBb 'L' contained conceal cchar=𝕃
-	syn match texMathSymbolBb 'M' contained conceal cchar=𝕄
-	syn match texMathSymbolBb 'N' contained conceal cchar=ℕ
-	syn match texMathSymbolBb 'O' contained conceal cchar=𝕆
-	syn match texMathSymbolBb 'P' contained conceal cchar=ℙ
-	syn match texMathSymbolBb 'Q' contained conceal cchar=ℚ
-	syn match texMathSymbolBb 'R' contained conceal cchar=ℝ
-	syn match texMathSymbolBb 'S' contained conceal cchar=𝕊
-	syn match texMathSymbolBb 'T' contained conceal cchar=𝕋
-	syn match texMathSymbolBb 'U' contained conceal cchar=𝕌
-	syn match texMathSymbolBb 'V' contained conceal cchar=𝕍
-	syn match texMathSymbolBb 'W' contained conceal cchar=𝕎
-	syn match texMathSymbolBb 'X' contained conceal cchar=𝕏
-	syn match texMathSymbolBb 'Y' contained conceal cchar=𝕐
-	syn match texMathSymbolBb 'Z' contained conceal cchar=ℤ
+	let s:texMathSymbolBbList = [
+		\ [' ', ' '],
+		\ ['A', '𝔸'],
+		\ ['B', '𝔹'],
+		\ ['C', 'ℂ'],
+		\ ['D', '𝔻'],
+		\ ['E', '𝔼'],
+		\ ['F', '𝔽'],
+		\ ['G', '𝔾'],
+		\ ['H', 'ℍ'],
+		\ ['I', '𝕀'],
+		\ ['J', '𝕁'],
+		\ ['K', '𝕂'],
+		\ ['L', '𝕃'],
+		\ ['M', '𝕄'],
+		\ ['N', 'ℕ'],
+		\ ['O', '𝕆'],
+		\ ['P', 'ℙ'],
+		\ ['Q', 'ℚ'],
+		\ ['R', 'ℝ'],
+		\ ['S', '𝕊'],
+		\ ['T', '𝕋'],
+		\ ['U', '𝕌'],
+		\ ['V', '𝕍'],
+		\ ['W', '𝕎'],
+		\ ['X', '𝕏'],
+		\ ['Y', '𝕐'],
+		\ ['Z', 'ℤ']]
 	syn match texMathSymbol '\\mathbb{\(\s\|[A-Z]\)\+}' contained conceal contains=texMathSymbolBb
 
-	" Do spell checking inside of the correct tex statements.
+	" Do spell checking inside of the correct tex text statements.
 	if !exists("g:tex_nospell") || !g:tex_nospell
 		syn region texMathText matchgroup=texStatement start='\\mathrm\s*{'                    end='}' concealends keepend contains=@texFoldGroup        containedin=texMathMatcher
 		syn region texMathText matchgroup=texStatement start='\\\(\(inter\)\=text\|mbox\)\s*{' end='}' concealends keepend contains=@texFoldGroup,@Spell containedin=texMathMatcher
