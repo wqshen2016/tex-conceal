@@ -1,8 +1,6 @@
 " Vim syntax file, better concealment for tex.
-" Language:     TeX
-" Maintainer:   Bram Pulles
-" Last Change:  February 27, 2020
-"
+" Maintainer: Bram Pulles
+
 if has('conceal') && &enc == 'utf-8'
 	" Misc.
 	syn match texDelimiter  '\\{'        contained conceal cchar={
