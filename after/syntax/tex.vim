@@ -10,31 +10,61 @@ if has('conceal') && &enc == 'utf-8'
 	syn match texStatement  '\'\''       contained conceal cchar=”
 	syn match texStatement  '\\item\>'   contained conceal cchar=•
 
+	" Conceal Left/Right combinations.
+	let s:texMathDelimList = [
+		\ ['<'            , '<'],
+		\ ['>'            , '>'],
+		\ ['|'            , '|'],
+		\ ['\\|'          , '‖'],
+		\ ['\\backslash'  , '\'],
+		\ ['\\lceil'      , '⌈'],
+		\ ['\\rceil'      , '⌉'],
+		\ ['\\lfloor'     , '⌊'],
+		\ ['\\rfloor'     , '⌋'],
+		\ ['\\lgroup'     , '⌊'],
+		\ ['\\rgroup'     , '⌋'],
+		\ ['\\lmoustache' , '⎛'],
+		\ ['\\rmoustache' , '⎞'],
+		\ ['\\lbrace'     , '['],
+		\ ['\\rbrace'     , ']'],
+		\ ['\\downarrow'  , '↓'],
+		\ ['\\Downarrow'  , '⇓'],
+		\ ['\\uparrow'    , '↑'],
+		\ ['\\Uparrow'    , '↑'],
+		\ ['\\updownarrow', '↕'],
+		\ ['\\Updownarrow', '⇕']]
+
+	for texMathDelim in s:texMathDelimList
+		exe "syn match texMathDelim '\\\\\\([bB]igg\\?\\|left\\|right\\)".texMathDelim[0]."' contained conceal cchar=".texMathDelim[1]
+	endfor
+
 	" Extra math symbols or redefinitions.
 	let s:texMathList = [
-		\ ['oplus'      , '⨭'],
-		\ ['mathcal{O}' , '𐐃'],
-		\ ['phi'        , 'Φ'],
-		\ ['sqrt'       , '√'],
-		\ ['cdot'       , '·'],
-		\ ['approx'     , '≈'],
-		\ ['equiv'      , '≡'],
-		\ ['square'     , '◻️'],
-		\ ['lozenge'    , '◊'],
-		\ [','          , ' '],
-		\ [' '          , ' '],
-		\ ['quad'       , ' '],
-		\ ['langle'     , '⟨'],
-		\ ['rangle'     , '⟩'],
-		\ ['lnot'       , '¬'],
-		\ ['geqslant'   , '⩾'],
-		\ ['leqslant'   , '⩽'],
-		\ ['vDash'      , '⊨'],
-		\ ['models'     , '⊨'],
-		\ ['setminus'   , '\'],
-		\ ['where'      , '|'],
-		\ ['emptyset'   , 'Ø'],
-		\ ['iff'        , '↔'],
+		\ ['oplus'         , '⨭'],
+		\ ['mathcal{O}'    , '𐐃'],
+		\ ['phi'           , 'Φ'],
+		\ ['sqrt'          , '√'],
+		\ ['cdot'          , '·'],
+		\ ['approx'        , '≈'],
+		\ ['equiv'         , '≡'],
+		\ ['square'        , '◻️'],
+		\ ['lozenge'       , '◊'],
+		\ [','             , ' '],
+		\ [' '             , ' '],
+		\ ['quad'          , ' '],
+		\ ['langle'        , '⟨'],
+		\ ['rangle'        , '⟩'],
+		\ ['lmoustache'    , '⎛'],
+		\ ['rmoustache'    , '⎞'],
+		\ ['lnot'          , '¬'],
+		\ ['geqslant'      , '⩾'],
+		\ ['leqslant'      , '⩽'],
+		\ ['vDash'         , '⊨'],
+		\ ['models'        , '⊨'],
+		\ ['setminus'      , '\'],
+		\ ['where'         , '|'],
+		\ ['emptyset'      , 'Ø'],
+		\ ['iff'           , '↔'],
 		\ ['Leftrightarrow', '↔']]
 
 	for texMath in s:texMathList
