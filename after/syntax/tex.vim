@@ -227,6 +227,11 @@ if has('conceal') && &enc == 'utf-8'
 		\ ['X', '𝕏'],
 		\ ['Y', '𝕐'],
 		\ ['Z', 'ℤ']]
+
+	for texMathSymbolBb in s:texMathSymbolBbList
+		exe "syn match texMathSymbolBb '".texMathSymbolBb[0]."' contained conceal cchar=".texMathSymbolBb[1]
+	endfor
+
 	syn match texMathSymbol '\\mathbb{\(\s\|[A-Z]\)\+}' contained conceal contains=texMathSymbolBb
 
 	" Do spell checking inside of the correct tex text statements.
