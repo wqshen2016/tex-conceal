@@ -238,7 +238,6 @@ if has('conceal') && &enc == 'utf-8'
 	if !exists("g:tex_nospell") || !g:tex_nospell
 		syn region texMathText matchgroup=texStatement start='\\mathrm\s*{'                    end='}' concealends keepend contains=@texFoldGroup        containedin=texMathMatcher
 		syn region texMathText matchgroup=texStatement start='\\\(\(inter\)\=text\|mbox\)\s*{' end='}' concealends keepend contains=@texFoldGroup,@Spell containedin=texMathMatcher
-
 	" Do not do any spell checking when it is turned of.
 	else
 		syn region texMathText matchgroup=texStatement start='\\\(\(inter\)\?text\|mbox\|mathrm\)\s*{' end='}' concealends keepend contains=@texFoldGroup containedin=texMathMatcher
@@ -253,8 +252,8 @@ if has('conceal') && &enc == 'utf-8'
 	highlight texBoldMathText cterm=bold gui=bold
 
 	" Hide \mathbf and \bm and make it bold. Text which is bold and italics.
-	syn region texBoldMathText  matchgroup=texStatement start='\\\(mathbf\|bm\){' end='}' concealends contains=@texMathZoneGroup containedin=texMathMatcher
-	syn region texBoldItalStyle matchgroup=texTypeStyle start="\\emph\s*{"        end="}" concealends contains=@texItalGroup
+	syn region texBoldMathText  matchgroup=texStatement start='\\\(mathbf\|bm\|textbf\){' end='}' concealends contains=@texMathZoneGroup containedin=texMathMatcher
+	syn region texBoldItalStyle matchgroup=texTypeStyle start="\\\(emph\|texttt\){"       end="}" concealends contains=@texItalGroup
 
 	" If this is not set then the unicode charaters break monospacing when text is concealed.
 	set ambiwidth=single
