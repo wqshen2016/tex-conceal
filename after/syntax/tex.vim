@@ -2,13 +2,56 @@
 " Maintainer: Bram Pulles
 
 if has('conceal') && &enc == 'utf-8'
+
 	" Misc.
 	syn match texDelimiter  '\\{'        contained conceal cchar={
 	syn match texDelimiter  '\\}'        contained conceal cchar=}
-
 	syn match texStatement  '``'         contained conceal cchar=“
 	syn match texStatement  '\'\''       contained conceal cchar=”
 	syn match texStatement  '\\item\>'   contained conceal cchar=•
+	" logical symbols
+	syn match texMathSymbol '\\lor\>' contained conceal cchar=∨
+	syn match texMathSymbol '\\land\>' contained conceal cchar=∧
+	syn match texMathSymbol '\\lnot\>' contained conceal cchar=¬
+	syn match texMathSymbol '\\implies\>' contained conceal cchar=⇒
+	syn match texMathSymbol '\\geqslant\>' contained conceal cchar=⩾
+	syn match texMathSymbol '\\leqslant\>' contained conceal cchar=⩽
+	" more reasonably sized symbols that were already defined
+	syn match texMathSymbol '\\Rightarrow\>' contained conceal cchar=⇒
+	syn match texMathSymbol '\\Leftarrow\>' contained conceal cchar=⇐
+	syn match texMathSymbol '\\rightarrow\>' contained conceal cchar=→
+	syn match texMathSymbol '\\leftarrow\>' contained conceal cchar=←
+	syn match texMathSymbol '\\varphi\>' contained conceal cchar=φ
+	syn match texMathSymbol '\\\\' contained conceal cchar=⏎
+	" \mathcal characters
+	syn match texMathSymbol '\\mathscr{A}' contained conceal cchar=𝓐
+	syn match texMathSymbol '\\mathscr{B}' contained conceal cchar=𝓑
+	syn match texMathSymbol '\\mathscr{C}' contained conceal cchar=𝓒
+	syn match texMathSymbol '\\mathscr{D}' contained conceal cchar=𝓓
+	syn match texMathSymbol '\\mathscr{E}' contained conceal cchar=𝓔
+	syn match texMathSymbol '\\mathscr{F}' contained conceal cchar=𝓕
+	syn match texMathSymbol '\\mathscr{G}' contained conceal cchar=𝓖
+	syn match texMathSymbol '\\mathscr{H}' contained conceal cchar=𝓗
+	syn match texMathSymbol '\\mathscr{I}' contained conceal cchar=𝓘
+	syn match texMathSymbol '\\mathscr{J}' contained conceal cchar=𝓙
+	syn match texMathSymbol '\\mathscr{K}' contained conceal cchar=𝓚
+	syn match texMathSymbol '\\mathscr{L}' contained conceal cchar=𝓛
+	syn match texMathSymbol '\\mathscr{M}' contained conceal cchar=𝓜
+	syn match texMathSymbol '\\mathscr{N}' contained conceal cchar=𝓝
+	syn match texMathSymbol '\\mathscr{O}' contained conceal cchar=𝓞
+	syn match texMathSymbol '\\mathscr{P}' contained conceal cchar=𝓟
+	syn match texMathSymbol '\\mathscr{Q}' contained conceal cchar=𝓠
+	syn match texMathSymbol '\\mathscr{R}' contained conceal cchar=𝓡
+	syn match texMathSymbol '\\mathscr{S}' contained conceal cchar=𝓢
+	syn match texMathSymbol '\\mathscr{T}' contained conceal cchar=𝓣
+	syn match texMathSymbol '\\mathscr{U}' contained conceal cchar=𝓤
+	syn match texMathSymbol '\\mathscr{V}' contained conceal cchar=𝓥
+	syn match texMathSymbol '\\mathscr{W}' contained conceal cchar=𝓦
+	syn match texMathSymbol '\\mathscr{X}' contained conceal cchar=𝓧
+	syn match texMathSymbol '\\mathscr{Y}' contained conceal cchar=𝓨
+	syn match texMathSymbol '\\mathscr{Z}' contained conceal cchar=𝓩
+	syn match texMathSymbol '\\pathspace' contained conceal cchar=Ω
+	syn match texMathSymbol '\\surfaces' contained conceal cchar=𝓜
 
 	" Conceal Left/Right combinations.
 	let s:texMathDelimList = [
@@ -54,8 +97,6 @@ if has('conceal') && &enc == 'utf-8'
 		\ ['quad'          , ' '],
 		\ ['langle'        , '⟨'],
 		\ ['rangle'        , '⟩'],
-		\ ['lmoustache'    , '⎛'],
-		\ ['rmoustache'    , '⎞'],
 		\ ['lnot'          , '¬'],
 		\ ['geqslant'      , '⩾'],
 		\ ['leqslant'      , '⩽'],
@@ -63,6 +104,7 @@ if has('conceal') && &enc == 'utf-8'
 		\ ['models'        , '⊨'],
 		\ ['setminus'      , '\'],
 		\ ['where'         , '|'],
+		\ ['mid'           , '|'],
 		\ ['emptyset'      , 'Ø'],
 		\ ['iff'           , '↔'],
 		\ ['Leftrightarrow', '↔']]
@@ -86,18 +128,10 @@ if has('conceal') && &enc == 'utf-8'
 		\ ['9'       , '₉'],
 		\ ['a'       , 'ₐ'],
 		\ ['e'       , 'ₑ'],
-		\ ['h'       , 'ₕ'],
 		\ ['i'       , 'ᵢ'],
 		\ ['j'       , 'ⱼ'],
-		\ ['k'       , 'ₖ'],
-		\ ['l'       , 'ₗ'],
-		\ ['m'       , 'ₘ'],
-		\ ['n'       , 'ₙ'],
 		\ ['o'       , 'ₒ'],
-		\ ['p'       , 'ₚ'],
 		\ ['r'       , 'ᵣ'],
-		\ ['s'       , 'ₛ'],
-		\ ['t'       , 'ₜ'],
 		\ ['u'       , 'ᵤ'],
 		\ ['v'       , 'ᵥ'],
 		\ ['x'       , 'ₓ'],
@@ -119,7 +153,7 @@ if has('conceal') && &enc == 'utf-8'
 	" Here we will make sure that the subscripts will only be concealed if ALL of the
 	" numbers/letters/symbols have a subscript equivalent, otherwise it is not concealed.
 	" NOTE: This is super ugly, so please inform me if you know a better way.
-	syn match texMathSymbol '_\(\([0-9]\|a\|e\|h\|i\|j\|k\|l\|m\|n\|o\|p\|r\|s\|t\|u\|v\|x\|+\|-\|=\|(\|)\|\\phi\|\\chi\|\\beta\|\\gamma\|\\rho\)\|{\([0-9]\|a\|e\|h\|i\|j\|k\|l\|m\|n\|o\|p\|r\|s\|t\|u\|v\|x\|+\|-\|=\|(\|)\|\\phi\|\\chi\|\\beta\|\\gamma\|\\rho\| \)\+}\)' contained conceal contains=texSubScriptBetter
+	syn match texMathSymbol '_\(\([0-9]\|a\|e\|i\|j\|o\|r\|u\|v\|x\|+\|-\|=\|(\|)\|\\phi\|\\chi\|\\beta\|\\gamma\|\\rho\)\|{\([0-9]\|a\|e\|i\|j\|o\|r\|u\|v\|x\|+\|-\|=\|(\|)\|\\phi\|\\chi\|\\beta\|\\gamma\|\\rho\| \)\+}\)' contained conceal contains=texSubScriptBetter
 
 	" Super scripts with numbers, letters and symbols mixed but smartly.
 	let s:texSuperScriptList = [
@@ -185,7 +219,13 @@ if has('conceal') && &enc == 'utf-8'
 		\ ['(', '⁽'],
 		\ [')', '⁾'],
 		\ ['=', '⁼'],
-		\ ['\.','˙']]
+		\ ['\.','˙'],
+		\ ['\beta', 'ᵝ'],
+		\ ['\gamma', 'ᵞ'],
+		\ ['\delta', 'ᵟ'],
+		\ ['\phi', 'ᵠ'],
+		\ ['\chi', 'ᵡ'],
+		\ ['\theta', 'ᶿ']]
 
 	for texSuperScript in s:texSuperScriptList
 		exe "syn match texSuperScriptBetter '".texSuperScript[0]."' contained conceal cchar=".texSuperScript[1]
@@ -243,9 +283,10 @@ if has('conceal') && &enc == 'utf-8'
 		syn region texMathText matchgroup=texStatement start='\\\(\(inter\)\?text\|mbox\|mathrm\)\s*{' end='}' concealends keepend contains=@texFoldGroup containedin=texMathMatcher
 	endif
 
-	" Recognise \begin{align} as a math environment to enable concealment there.
+	" Recognise align, align* and cases as a math environment to enable concealment there.
 	syn region texMathZoneA matchgroup=texStatement start="\\begin{align}"   matchgroup=texStatement end="\\end{align}"   keepend contains=@texMathZoneGroup
 	syn region texMathZoneA matchgroup=texStatement start="\\begin{align\*}" matchgroup=texStatement end="\\end{align\*}" keepend contains=@texMathZoneGroup
+	syn region texMathZoneA matchgroup=texStatement start="\\begin{cases}"   matchgroup=texStatement end="\\end{align\*}" keepend contains=@texMathZoneGroup
 
 	" Add a syntax group for bold text in mathmode.
 	syn cluster texMathZoneGroup add=texBoldMathText
